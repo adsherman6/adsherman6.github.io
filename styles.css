@@ -1,11 +1,23 @@
 :root {
-  color-scheme:light;
+  color-scheme:light dark;
   --ink:#12243a;
   --muted:#536277;
   --accent:#175bc1;
+  --accent-hover:#10499e;
+  --on-accent:#fff;
   --line:#dce3ec;
+  --rule:#c9d4e2;
   --paper:#fff;
   --wash:#f3f6fa;
+  --panel:#12243a;
+  --panel-ink:#fff;
+  --panel-muted:#c7d3e1;
+  --panel-accent:#a9caff;
+  --panel-line:#354357;
+  --panel-edge:#3980e7;
+  --tag-bg:#fff;
+  --tag-line:#ccd7e4;
+  --tag-ink:#354b67;
   --radius:12px
 }
 
@@ -20,7 +32,7 @@ body {
   margin:0;
   background:var(--paper);
   color:var(--ink);
-  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size:16px;
   line-height:1.65;
   -webkit-font-smoothing:antialiased
@@ -32,7 +44,7 @@ a {
 a:hover {
   text-decoration-thickness:2px
 }
-a:focus-visible,summary:focus-visible {
+a:focus-visible,summary:focus-visible,button:focus-visible,[tabindex]:not([tabindex="-1"]):focus-visible {
   outline:3px solid var(--accent);
   outline-offset:6px;
   border-radius:3px
@@ -146,10 +158,10 @@ h1 span {
 }
 .primary {
   background:var(--accent);
-  color:white
+  color:var(--on-accent)
 }
 .primary:hover {
-  background:#10499e
+  background:var(--accent-hover)
 }
 .text-link {
   font-weight:650;
@@ -162,18 +174,18 @@ h1 span {
   color:var(--muted)
 }
 .expertise {
-  background:var(--ink);
-  color:white;
+  background:var(--panel);
+  color:var(--panel-ink);
   padding:32px;
   border-radius:var(--radius);
-  border-top:4px solid #3980e7
+  border-top:4px solid var(--panel-edge)
 }
 .expertise .eyebrow {
-  color:#a9caff
+  color:var(--panel-accent)
 }
 .scope-item {
   padding-block:20px;
-  border-bottom:1px solid #354357
+  border-bottom:1px solid var(--panel-line)
 }
 .scope-item strong {
   display:block;
@@ -184,7 +196,7 @@ h1 span {
 .scope-item span {
   display:block;
   margin-top:7px;
-  color:#c7d3e1;
+  color:var(--panel-muted);
   font-size:14px
 }
 .education-note {
@@ -203,10 +215,10 @@ h1 span {
   margin-bottom:7px
 }
 .education-note .small-label {
-  color:#a9caff
+  color:var(--panel-accent)
 }
 .muted {
-  color:#c7d3e1;
+  color:var(--panel-muted);
   font-size:14px
 }
 .section {
@@ -235,7 +247,7 @@ h1 span {
   display:grid;
   grid-template-columns:1fr 1.35fr;
   gap:75px;
-  border-top:1px solid #c9d4e2;
+  border-top:1px solid var(--rule);
   padding-block:38px
 }
 .project:last-child {
@@ -268,11 +280,11 @@ h1 span {
 }
 .tags li {
   font-size:12px;
-  border:1px solid #ccd7e4;
+  border:1px solid var(--tag-line);
   border-radius:4px;
   padding:3px 9px;
-  color:#354b67;
-  background:#fff
+  color:var(--tag-ink);
+  background:var(--tag-bg)
 }
 .project-story>p {
   color:var(--muted)
@@ -370,7 +382,8 @@ h1 span {
   display:none
 }
 .earlier-roles summary span {
-  font-size:22px
+  font-size:22px;
+  transition:transform .2s ease
 }
 .earlier-roles[open] summary span {
   transform:rotate(45deg)
@@ -429,7 +442,9 @@ h1 span {
 .contact-links a {
   color:var(--muted)
 }
+/* QR is print-only: on screen, visitors can tap the links instead. */
 .contact-qr {
+  display:none;
   padding:17px;
   border:1px solid var(--line);
   border-radius:8px;
@@ -460,7 +475,9 @@ h1 span {
   color:var(--ink)
 }
 .site-footer a {
-  color:var(--muted)
+  color:var(--muted);
+  display:inline-block;
+  padding-block:6px
 }
 .sr-only {
   position:absolute;
@@ -478,12 +495,15 @@ h1 span {
   top:-100px;
   left:20px;
   z-index:10;
-  background:var(--ink);
-  color:white;
+  background:var(--panel);
+  color:var(--panel-ink);
   padding:10px 20px
 }
 .skip-link:focus {
   top:12px
+}
+main:focus {
+  outline:none
 }
 
 @media(max-width:900px) {
@@ -615,7 +635,6 @@ nav a {
   padding-block:6px
 }
 .contact-qr {
-  display:flex;
   align-items:center;
   gap:17px;
   padding:10px
@@ -640,6 +659,9 @@ nav a {
   html {
   scroll-behavior:auto
 }
+.earlier-roles summary span {
+  transition:none
+}
 
 }
 
@@ -651,7 +673,7 @@ nav a {
 .wrap {
   width:100%
 }
-.site-header nav,.actions,.pdf-link,.contact-qr,.contact-links,.site-footer,.skip-link {
+.site-header nav,.actions,.pdf-link,.contact-links,.site-footer,.skip-link {
   display:none
 }
 .site-header {
@@ -719,6 +741,13 @@ h2 {
 .contact-email {
   font-size:16pt
 }
+.contact-qr {
+  display:block;
+  break-inside:avoid
+}
+.projects-section,.experience-section {
+  border-block:0
+}
 a {
   color:inherit
 }
@@ -732,4 +761,34 @@ a {
   font-size: 15px;
   color: var(--muted);
   margin-top: 11px;
+}
+
+/* Dark mode (screen only; print always uses the light palette). */
+@media screen and (prefers-color-scheme:dark) {
+  :root {
+    --ink:#e6edf6;
+    --muted:#a3b1c4;
+    --accent:#7fb0ff;
+    --accent-hover:#a5c8ff;
+    --on-accent:#0d1724;
+    --line:#22334a;
+    --rule:#2c3f57;
+    --paper:#0d1724;
+    --wash:#111f30;
+    --panel:#16283f;
+    --panel-ink:#f3f6fa;
+    --panel-muted:#b9c6d6;
+    --panel-accent:#a9caff;
+    --panel-line:#2c3f57;
+    --panel-edge:#7fb0ff;
+    --tag-bg:#0d1724;
+    --tag-line:#2c3f57;
+    --tag-ink:#c3d0e0
+  }
+}
+
+@media print {
+  :root {
+    color-scheme:light
+  }
 }
